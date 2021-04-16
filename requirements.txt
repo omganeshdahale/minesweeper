@@ -1,2 +1,2 @@
 Pillow==8.2.0
-playsound==1.2.2
+pygame==2.0.1
