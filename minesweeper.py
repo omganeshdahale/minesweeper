@@ -1,7 +1,7 @@
 from tkinter import *
 from random import randint
 from PIL import Image, ImageTk
-from playsound import playsound
+import pygame
 
 WIDTH = 9
 HEIGHT = 9
@@ -20,6 +20,8 @@ COL = {
     8:'black'
 }
 flag_count = 0
+
+pygame.mixer.init()
 
 root = Tk()
 root.title('Minesweeper')
@@ -67,11 +69,13 @@ class Square(Button):
         self.bind('<Button-3>', self.flag)
     
     def on_click(self):
-        playsound("audio/click.wav", False)
+        pygame.mixer.music.load("audio/click.wav")
+        pygame.mixer.music.play()
 
         if self.value == -1 and not self.flagged:
             # on game over
-            playsound("audio/explosion.wav", False)
+            pygame.mixer.music.load("audio/explosion.wav")
+            pygame.mixer.music.play()
 
             smiley.config(image=dead_img)
             self.config(bg='red')
@@ -81,7 +85,8 @@ class Square(Button):
             self.spread()
             if total_revealed_sq >= TOTAL_NON_MINES:
                 # on win
-                playsound("audio/win.wav", False)
+                pygame.mixer.music.load("audio/win.wav")
+                pygame.mixer.music.play()
 
                 smiley.config(image=cool_img)
                 end_game()
@@ -147,7 +152,8 @@ class Square(Button):
     def flag(self, ev):
         global flag_count
 
-        playsound("audio/flag.wav", False)
+        pygame.mixer.music.load("audio/flag.wav")
+        pygame.mixer.music.play()
         
         if self.flagged:
             self.config(image='', width=2)
